@@ -6,15 +6,24 @@ use App\Models\ShortLink;
 use App\Models\ClickLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
 class LinkController extends Controller
 {
+    use AuthorizesRequests;
     public function index(Request $request)
     {
         $links = auth()->user()->shortLinks()
+            ->withCount('clickLogs as click_count')
             ->orderBy('created_at', 'desc')
             ->paginate(15);
+
+        // Add public URL to each link
+        $links->getCollection()->transform(function ($link) {
+            $link->public_url = url('/' . $link->slug);
+            return $link;
+        });
 
         return Inertia::render('Links/Index', [
             'links' => $links,
@@ -29,24 +38,24 @@ class LinkController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'target_url' => 'required|url',
-            'custom_alias' => 'nullable|string|unique:short_links',
+            'target_url' => 'required|url|max:2048',
+            'custom_alias' => 'nullable|string|alpha_dash|unique:short_links,slug|max:100',
             'title' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:1000',
             'category' => 'nullable|string|max:50',
-            'expires_at' => 'nullable|date|after:today',
+            'expires_at' => 'nullable|date|after:now',
         ]);
 
         $slug = $validated['custom_alias'] ?? Str::random(6);
 
         $link = auth()->user()->shortLinks()->create([
             'slug' => $slug,
-            'custom_alias' => $validated['custom_alias'],
+            'custom_alias' => $validated['custom_alias'] ?? null,
             'target_url' => $validated['target_url'],
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-            'category' => $validated['category'],
-            'expires_at' => $validated['expires_at'],
+            'title' => $validated['title'] ?? null,
+            'description' => $validated['description'] ?? null,
+            'category' => $validated['category'] ?? null,
+            'expires_at' => $validated['expires_at'] ?? null,
             'is_active' => true,
         ]);
 
@@ -58,21 +67,34 @@ class LinkController extends Controller
     {
         $this->authorize('view', $link);
 
+        $link->public_url = url('/' . $link->slug);
+
         $analytics = [
             'total_clicks' => $link->clickLogs()->count(),
             'today_clicks' => $link->clickLogs()
                 ->whereDate('clicked_at', today())
                 ->count(),
+            'week_clicks' => $link->clickLogs()
+                ->where('clicked_at', '>=', now()->subWeek())
+                ->count(),
+            'month_clicks' => $link->clickLogs()
+                ->where('clicked_at', '>=', now()->subMonth())
+                ->count(),
             'top_countries' => $link->clickLogs()
                 ->selectRaw('country, COUNT(*) as count')
+                ->whereNotNull('country')
                 ->groupBy('country')
                 ->orderByDesc('count')
                 ->limit(5)
                 ->get(),
             'recent_clicks' => $link->clickLogs()
                 ->orderBy('clicked_at', 'desc')
-                ->limit(10)
-                ->get(),
+                ->limit(20)
+                ->get()
+                ->map(function ($click) {
+                    $click->clicked_at = $click->clicked_at->diffForHumans();
+                    return $click;
+                }),
         ];
 
         return Inertia::render('Links/Show', [

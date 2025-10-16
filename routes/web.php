@@ -18,19 +18,39 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+        $user = auth()->user();
+        
+        $stats = [
+            'total_links' => $user->shortLinks()->count(),
+            'total_clicks' => \App\Models\ClickLog::whereHas('shortLink', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->count(),
+            'today_clicks' => \App\Models\ClickLog::whereHas('shortLink', function($q) use ($user) {
+                $q->where('user_id', $user->id);
+            })->whereDate('clicked_at', today())->count(),
+        ];
+        
+        $recentLinks = $user->shortLinks()
+            ->withCount('clickLogs as click_count')
+            ->latest()
+            ->take(5)
+            ->get();
+        
+        return Inertia::render('Dashboard', [
+            'stats' => $stats,
+            'recentLinks' => $recentLinks,
+        ]);
     })->name('dashboard');
 
     // Link management
-    Route::resource('links', LinkController::class)->except(['destroy']);
-    Route::delete('links/{link}', [LinkController::class, 'destroy'])->name('links.destroy');
+    Route::resource('links', LinkController::class);
 
     // Profile management
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     // QR Code generation
-    Route::get('/links/{link}/qr', [QRCodeController::class, 'generate'])->name('links.qr.show');
+    Route::get('/links/{link}/qr', [QRCodeController::class, 'generate'])->name('links.qr');
     Route::get('/links/{link}/qr/download', [QRCodeController::class, 'download'])->name('links.qr.download');
 });
 

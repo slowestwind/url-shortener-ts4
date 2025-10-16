@@ -1,6 +1,6 @@
 # TS4.in - FREE FOREVER Link Shortener 🔗
 
-**India-focused, completely free, open-source alternative to Linktree / Bitly / QR generators.**
+**Completely free, open-source alternative to Linktree / Bitly / QR generators.**
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-friendly-orange)](CONTRIBUTING.md)

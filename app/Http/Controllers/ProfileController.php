@@ -14,7 +14,7 @@ class ProfileController extends Controller
 
         $user = $profile->user;
 
-        if (!$user->is_active) {
+        if (! $user->is_active) {
             abort(404);
         }
 

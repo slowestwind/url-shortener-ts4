@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LinkController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QRCodeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -17,25 +17,27 @@ Route::get('/', function () {
 })->name('home');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/dashboard', function (\App\Services\AnalyticsService $analyticsService) {
         $user = auth()->user();
-        
-        $stats = [
-            'total_links' => $user->shortLinks()->count(),
-            'total_clicks' => \App\Models\ClickLog::whereHas('shortLink', function($q) use ($user) {
-                $q->where('user_id', $user->id);
-            })->count(),
-            'today_clicks' => \App\Models\ClickLog::whereHas('shortLink', function($q) use ($user) {
-                $q->where('user_id', $user->id);
-            })->whereDate('clicked_at', today())->count(),
-        ];
-        
+
+        $stats = array_merge(
+            [
+                'total_links' => $user->shortLinks()->count(),
+            ],
+            $analyticsService->getUserStats($user->id)
+        );
+
         $recentLinks = $user->shortLinks()
             ->withCount('clickLogs as click_count')
             ->latest()
             ->take(5)
-            ->get();
-        
+            ->get()
+            ->map(function ($link) {
+                $link->public_url = url('/' . $link->slug);
+
+                return $link;
+            });
+
         return Inertia::render('Dashboard', [
             'stats' => $stats,
             'recentLinks' => $recentLinks,
@@ -58,4 +60,4 @@ Route::middleware('auth')->group(function () {
 Route::get('/{slug}', [LinkController::class, 'redirect'])->name('links.redirect')->where('slug', '[a-zA-Z0-9\-]+');
 Route::get('/@{profileSlug}', [ProfileController::class, 'show'])->name('profile.public')->where('profileSlug', '[a-zA-Z0-9_\-]+');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

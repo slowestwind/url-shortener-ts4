@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ts4-app
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=ts4_db
+      - DB_USERNAME=root
+      - DB_PASSWORD=root_password
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    volumes:
+      - ./:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    networks:
+      - ts4-network
+
+  db:
+    image: mysql:8.0
+    container_name: ts4-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ts4_db
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_PASSWORD: password
+      MYSQL_USER: ts4_user
+    volumes:
+      - ./storage/db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - ts4-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: ts4-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - ts4-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: ts4-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/app
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - app
+    networks:
+      - ts4-network
+
+networks:
+  ts4-network:
+    driver: bridge

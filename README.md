@@ -35,8 +35,8 @@
 
 1. **Clone & Setup**
 ```bash
-git clone https://github.com/yourusername/ts4-in.git
-cd ts4-in
+git clone git@github.com:slowestwind/url-shortner-ts4.git
+cd url-shortner-ts4
 ```
 
 2. **Install Dependencies**
@@ -156,7 +156,7 @@ php artisan test
 We love contributions! Please check [CONTRIBUTING.md](CONTRIBUTING.md) to get started.
 
 ### Good First Issues
-Look for `good first issue` label in [Issues](../../issues?q=label%3A"good+first+issue") to find beginner-friendly tasks.
+Look for `good first issue` label in [Issues](https://github.com/slowestwind/url-shortner-ts4/issues?q=label%3A"good+first+issue") to find beginner-friendly tasks.
 
 ## 📝 License
 
@@ -166,9 +166,9 @@ Free forever for everyone. ❤️
 
 ## 📞 Support
 
-- 📧 Email: support@ts4.in
-- 🐛 Report bugs: [GitHub Issues](../../issues)
-- 💬 Discussions: [GitHub Discussions](../../discussions)
+- 📧 Email: slowestwind@gmail.com
+- 🐛 Report bugs: [GitHub Issues](https://github.com/slowestwind/url-shortner-ts4/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/slowestwind/url-shortner-ts4/discussions)
 
 ---
 

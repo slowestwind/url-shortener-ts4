@@ -1,5 +1,18 @@
 {
     "$schema": "https://json.schemastore.org/package.json",
+    "name": "url-shortner-ts4",
+    "version": "1.0.0",
+    "description": "TS4.in - Free Forever Link Shortener",
+    "author": "Arvind Sharma <slowestwind@gmail.com>",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:slowestwind/url-shortner-ts4.git"
+    },
+    "bugs": {
+        "url": "https://github.com/slowestwind/url-shortner-ts4/issues"
+    },
+    "homepage": "https://github.com/slowestwind/url-shortner-ts4#readme",
     "private": true,
     "type": "module",
     "scripts": {

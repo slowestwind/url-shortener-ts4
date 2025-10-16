@@ -24,7 +24,7 @@ Before starting, make sure you have:
 
 ```bash
 # Navigate to the project
-cd /home/arvind/Downloads/testing/ts4-in
+cd url-shortner-ts4
 
 # Install PHP dependencies
 composer install
@@ -98,7 +98,7 @@ npm run dev
 ## 📁 Project Structure
 
 ```
-ts4-in/
+url-shortner-ts4/
 ├── app/
 │   ├── Http/Controllers/        # Request handlers
 │   │   ├── LinkController.php        # Link CRUD & redirect
@@ -401,16 +401,16 @@ npm run dev
 
 Want to contribute? Great! Check out:
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Guidelines
-- [GitHub Issues](../../issues) - Tasks to work on
-- [Good First Issues](../../issues?q=label%3A"good+first+issue") - Start here!
+- [GitHub Issues](https://github.com/slowestwind/url-shortner-ts4/issues) - Tasks to work on
+- [Good First Issues](https://github.com/slowestwind/url-shortner-ts4/issues?q=label%3A"good+first+issue") - Start here!
 
 ---
 
 ## 📞 Support & Help
 
-- 📧 Email: support@ts4.in
-- 💬 GitHub Discussions: [Ask Questions](../../discussions)
-- 🐛 Report Issues: [GitHub Issues](../../issues)
+- 📧 Email: slowestwind@gmail.com
+- 💬 GitHub Discussions: [Ask Questions](https://github.com/slowestwind/url-shortner-ts4/discussions)
+- 🐛 Report Issues: [GitHub Issues](https://github.com/slowestwind/url-shortner-ts4/issues)
 - 📖 Full Documentation: [SETUP.md](SETUP.md)
 
 ---

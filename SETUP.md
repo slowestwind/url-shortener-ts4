@@ -12,8 +12,8 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/ts4-in.git
-cd ts4-in
+git clone git@github.com:slowestwind/url-shortner-ts4.git
+cd url-shortner-ts4
 
 # Install PHP dependencies
 composer install

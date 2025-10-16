@@ -30,8 +30,8 @@ This project and everyone participating in it is governed by our Code of Conduct
 
 ```bash
 # Clone your fork
-git clone https://github.com/your-username/ts4-in.git
-cd ts4-in
+git clone https://github.com/your-username/url-shortner-ts4.git
+cd url-shortner-ts4
 
 # Setup environment
 cp .env.example .env
@@ -87,4 +87,4 @@ Contributors will be recognized in our [CONTRIBUTORS.md](CONTRIBUTORS.md) file!
 
 ---
 
-Questions? Start a [Discussion](../../discussions) or email support@ts4.in
+Questions? Start a [Discussion](https://github.com/slowestwind/url-shortner-ts4/discussions) or email slowestwind@gmail.com

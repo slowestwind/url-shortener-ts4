@@ -349,7 +349,7 @@ QUEUE_CONNECTION=sync
 
 ### Getting Started
 ```bash
-cd /home/arvind/Downloads/testing/ts4-in
+cd url-shortner-ts4
 php artisan serve
 npm run dev
 ```
@@ -376,7 +376,7 @@ git push origin feature/my-feature
 ## 🔗 Key Files Location
 
 ```
-Project Root: /home/arvind/Downloads/testing/ts4-in/
+Project Root: url-shortner-ts4/
 
 Core Files:
 ├── app/Models/           → Database models
@@ -403,5 +403,5 @@ The project is **fully scaffolded** and ready for:
 ---
 
 *Created: October 16, 2025*
-*By: GitHub Copilot*
+*By: Arvind Sharma (@slowestwind)*
 *For: TS4.in - Free Forever Link Shortener*

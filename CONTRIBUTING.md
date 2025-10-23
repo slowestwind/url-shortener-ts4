@@ -4,7 +4,7 @@ First off, thank you for considering contributing to TS4.in! It's people like yo
 
 ## Code of Conduct
 
-This project and everyone participating in it is governed by our Code of Conduct. By participating, you are expected to uphold this code.
+This project and everyone participating in it is governed by our [Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code. Please report unacceptable behavior to slowestwind@gmail.com.
 
 ## How Can I Contribute?
 

@@ -4,6 +4,7 @@
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL%20v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 [![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-friendly-orange)](CONTRIBUTING.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.0-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 ## 🎯 Features (MVP)
 
